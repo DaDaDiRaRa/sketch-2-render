@@ -77,21 +77,36 @@ export default function App() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 font-sans text-white">
-        <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-8 w-full max-w-md shadow-2xl text-center">
-          <Shield className="w-12 h-12 text-indigo-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold mb-2">Sketch 2 Render</h1>
-          <p className="text-zinc-400 text-sm mb-6">Enter password to access ArchViz Engine</p>
+      <div className="min-h-screen bg-[var(--color-bg-page)] flex items-center justify-center p-4">
+        <div
+          className="rounded-2xl p-8 w-full max-w-md text-center"
+          style={{
+            background: 'var(--color-bg-surface)',
+            border: '1px solid var(--color-border)',
+            boxShadow: 'var(--shadow-lg)',
+          }}
+        >
+          <Shield className="w-12 h-12 text-[var(--color-accent)] mx-auto mb-4" />
+          <h1 className="text-2xl font-bold mb-2 text-[var(--color-text-primary)]">Sketch 2 Render</h1>
+          <p className="text-[var(--color-text-muted)] text-sm mb-6">Enter password to access ArchViz Engine</p>
           <form onSubmit={handlePasswordSubmit}>
             <input
               type="password"
               value={passwordInput}
               onChange={(e) => setPasswordInput(e.target.value)}
               placeholder="Password"
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 mb-4 text-center focus:outline-none focus:border-indigo-500 tracking-widest"
+              className="w-full rounded-xl px-4 py-3 mb-4 text-center focus:outline-none focus:[border-color:var(--color-accent)] tracking-widest text-[var(--color-text-primary)]"
+              style={{
+                background: 'var(--color-bg-input)',
+                border: '1px solid var(--color-border)',
+              }}
             />
-            {passwordError && <p className="text-red-400 text-sm mb-4">{passwordError}</p>}
-            <button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all">
+            {passwordError && <p className="text-[var(--color-danger)] text-sm mb-4">{passwordError}</p>}
+            <button
+              type="submit"
+              className="w-full py-3 rounded-xl font-bold transition-all text-white hover:[background:var(--color-accent-hover)]"
+              style={{ background: 'var(--color-accent)' }}
+            >
               Unlock
             </button>
           </form>
@@ -101,13 +116,13 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-zinc-100 font-sans pb-20">
+    <div className="min-h-screen bg-[var(--color-bg-page)] pb-20">
       <main className="max-w-7xl mx-auto px-6 py-8">
         <header className="mb-8 flex items-baseline gap-4">
-          <h1 className="text-3xl font-bold tracking-tight text-white">Sketch 2 Render</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)]">Sketch 2 Render</h1>
           <div className="flex items-baseline gap-2">
-            <span className="text-lg text-zinc-500 font-medium">for Exterior</span>
-            <span className="text-[10px] text-zinc-600 font-medium uppercase tracking-wider">
+            <span className="text-lg text-[var(--color-text-muted)] font-medium">for Exterior</span>
+            <span className="text-[10px] text-[var(--color-text-faint)] font-medium uppercase tracking-wider">
               © 2026. Junghyun Kim. All rights reserved.
             </span>
           </div>
@@ -134,7 +149,8 @@ export default function App() {
             <button
               onClick={handleGenerateRendering}
               disabled={!controlNetImg || isGenerating}
-              className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold uppercase tracking-wide text-white flex items-center justify-center gap-2 transition-all disabled:opacity-50 shadow-lg shadow-indigo-500/20"
+              className="w-full py-4 rounded-xl font-bold uppercase tracking-wide text-white flex items-center justify-center gap-2 transition-all disabled:opacity-50 shadow-md hover:[background:var(--color-accent-hover)]"
+              style={{ background: 'var(--color-accent)' }}
             >
               {isGenerating ? (
                 <><Loader2 className="w-5 h-5 animate-spin" /> Executing Pipeline...</>
@@ -143,7 +159,7 @@ export default function App() {
               )}
             </button>
             {error && (
-              <p className="text-red-400 p-4 bg-red-900/20 border border-red-900/50 rounded-xl text-sm">{error}</p>
+              <p className="text-[var(--color-danger)] p-4 bg-[var(--color-danger-bg)] border border-[var(--color-danger-border)] rounded-xl text-sm">{error}</p>
             )}
           </div>
           <div className="lg:col-span-5 relative">

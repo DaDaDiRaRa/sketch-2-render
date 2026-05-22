@@ -232,18 +232,18 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
   return (
     <div className="lg:col-span-5 relative">
       <div className="sticky top-24">
-        <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 flex flex-col h-[calc(100vh-8rem)]">
+        <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-4 flex flex-col h-[calc(100vh-8rem)]">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
-              <ImageIcon className="w-4 h-4 text-zinc-400" />
-              <h2 className="text-sm font-medium text-zinc-300 font-mono uppercase tracking-wider">Preview Image Node</h2>
+              <ImageIcon className="w-4 h-4 text-[var(--color-text-muted)]" />
+              <h2 className="text-sm font-medium text-[var(--color-text-primary)] font-mono uppercase tracking-wider">Preview Image Node</h2>
             </div>
             <div className="flex items-center gap-2">
               {resultImage && (
                 <>
                   <button
                     onClick={() => { setIsEditing(true); setShowComparison(false); }}
-                    className="p-1.5 rounded-md transition-all flex items-center gap-1.5 text-[10px] font-bold uppercase border bg-zinc-800 border-zinc-700 text-zinc-400 hover:text-zinc-100"
+                    className="p-1.5 rounded-md transition-all flex items-center gap-1.5 text-[10px] font-bold uppercase border bg-[var(--color-bg-surface-alt)] border-[var(--color-border)] text-[var(--color-text-muted)] hover:[color:var(--color-text-primary)] hover:[border-color:var(--color-border-strong)]"
                   >
                     <Pencil className="w-3 h-3" />
                     Enter Focus Edit
@@ -251,13 +251,13 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                   {history.length > 0 && (
                     <button
                       onClick={handleUndo}
-                      className="p-1.5 bg-zinc-800 border border-zinc-700 rounded-md transition-colors text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-[10px] font-bold uppercase"
+                      className="p-1.5 bg-[var(--color-bg-surface-alt)] border border-[var(--color-border)] rounded-md transition-colors text-[var(--color-text-muted)] hover:[color:var(--color-text-primary)] hover:[border-color:var(--color-border-strong)] flex items-center gap-1.5 text-[10px] font-bold uppercase"
                     >
                       <Undo2 className="w-3 h-3" />
                       Undo
                     </button>
                   )}
-                  <button onClick={handleDownload} className="p-1.5 bg-zinc-800 border border-zinc-700 rounded-md transition-colors text-zinc-400 hover:text-zinc-100">
+                  <button onClick={handleDownload} className="p-1.5 bg-[var(--color-bg-surface-alt)] border border-[var(--color-border)] rounded-md transition-colors text-[var(--color-text-muted)] hover:[color:var(--color-text-primary)] hover:[border-color:var(--color-border-strong)]">
                     <Download className="w-4 h-4" />
                   </button>
                 </>
@@ -266,10 +266,10 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
           </div>
 
           {resultImage && (
-            <div className="mb-4 p-3 bg-zinc-950 border border-zinc-800 rounded-lg">
+            <div className="mb-4 p-3 bg-[var(--color-bg-surface-alt)] border border-[var(--color-border)] rounded-lg">
               <div className="flex items-center gap-2 mb-3">
-                <Maximize2 className="w-3 h-3 text-zinc-500" />
-                <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-wider">Professional Upscale</span>
+                <Maximize2 className="w-3 h-3 text-[var(--color-text-muted)]" />
+                <span className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider">Professional Upscale</span>
               </div>
               <div className="flex gap-2">
                 {['1K', '2K', '4K'].map((res) => (
@@ -277,7 +277,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                     key={res}
                     onClick={() => handleUpscale(res)}
                     disabled={isUpscaling}
-                    className="flex-1 py-1.5 bg-zinc-900 border border-zinc-800 hover:border-indigo-500/50 hover:bg-indigo-500/5 text-zinc-400 hover:text-indigo-400 rounded-md text-[10px] font-bold transition-all disabled:opacity-50"
+                    className="flex-1 py-1.5 bg-[var(--color-bg-surface)] border border-[var(--color-border)] hover:[border-color:var(--color-accent)] hover:[background:var(--color-accent-soft)] text-[var(--color-text-muted)] hover:[color:var(--color-accent)] rounded-md text-[10px] font-bold transition-all disabled:opacity-50"
                   >
                     {res}
                   </button>
@@ -286,14 +286,17 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
             </div>
           )}
 
-          <div className="flex-1 bg-zinc-950 rounded-lg border border-zinc-800 overflow-hidden flex items-center justify-center relative">
+          <div
+            className="flex-1 rounded-lg overflow-hidden flex items-center justify-center relative"
+            style={{ background: 'var(--brand-black)', border: '1px solid var(--color-border)' }}
+          >
             <AnimatePresence mode="wait">
               {isUpscaling && (
                 <motion.div key="upscale-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                   className="absolute inset-0 z-50 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4"
                 >
-                  <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
-                  <p className="text-xs font-bold text-zinc-300 uppercase tracking-widest animate-pulse">Enhancing to {upscaleTarget}...</p>
+                  <Loader2 className="w-8 h-8 text-[var(--color-accent)] animate-spin" />
+                  <p className="text-xs font-bold text-[var(--color-text-on-accent)] uppercase tracking-widest animate-pulse">Enhancing to {upscaleTarget}...</p>
                 </motion.div>
               )}
               {resultImage ? (
@@ -315,7 +318,10 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                     </div>
                   </div>
                   <div className="absolute bottom-4 left-4 px-2 py-1 bg-black/50 backdrop-blur-md rounded text-[10px] font-bold text-white uppercase tracking-widest border border-white/10 pointer-events-none z-30">Structure</div>
-                  <div className="absolute bottom-4 right-4 px-2 py-1 bg-indigo-500/50 backdrop-blur-md rounded text-[10px] font-bold text-white uppercase tracking-widest border border-indigo-500/30 pointer-events-none z-30">Render</div>
+                  <div
+                    className="absolute bottom-4 right-4 px-2 py-1 backdrop-blur-md rounded text-[10px] font-bold text-white uppercase tracking-widest pointer-events-none z-30"
+                    style={{ background: 'rgba(230,0,18,0.5)', border: '1px solid rgba(230,0,18,0.3)' }}
+                  >Render</div>
                   <input
                     type="range" min="0" max="100"
                     value={comparisonValue}
@@ -325,21 +331,24 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                 </motion.div>
               ) : (
                 <motion.div key="placeholder" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  className="flex flex-col items-center justify-center text-zinc-600 p-8 text-center"
+                  className="flex flex-col items-center justify-center text-[var(--color-text-subtle)] p-8 text-center"
                 >
-                  <div className="w-12 h-12 bg-zinc-900 rounded flex items-center justify-center mb-4 border border-zinc-800">
+                  <div
+                    className="w-12 h-12 rounded flex items-center justify-center mb-4"
+                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                  >
                     <ImageIcon className="w-6 h-6" />
                   </div>
-                  <p className="text-xs font-mono text-zinc-500">Waiting for KSampler output...</p>
+                  <p className="text-xs font-mono text-[var(--color-text-subtle)]">Waiting for KSampler output...</p>
                 </motion.div>
               )}
             </AnimatePresence>
 
             {isGenerating && (
               <div className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm flex flex-col items-center justify-center gap-4">
-                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+                <Loader2 className="w-8 h-8 text-[var(--color-accent)] animate-spin" />
                 <div className="text-center font-mono">
-                  <p className="text-sm text-zinc-300">Processing Nodes...</p>
+                  <p className="text-sm text-[var(--color-text-on-accent)]">Processing Nodes...</p>
                   <p className="text-xs text-zinc-500 mt-1">Applying ControlNet & IPAdapter</p>
                 </div>
               </div>
@@ -352,16 +361,17 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
       <AnimatePresence>
         {isEditing && resultImage && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] bg-zinc-950 flex flex-col p-6 items-center overflow-hidden"
+            className="fixed inset-0 z-[200] flex flex-col p-6 items-center overflow-hidden"
+            style={{ background: 'var(--brand-black)' }}
           >
             <div className="w-full max-w-[1600px] flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-indigo-500/20 rounded-lg">
-                  <Pencil className="w-5 h-5 text-indigo-400" />
+                <div className="p-2 bg-[var(--color-accent-soft)] rounded-lg">
+                  <Pencil className="w-5 h-5 text-[var(--color-accent)]" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-white tracking-tight">Focus Edit Mode</h2>
-                  <p className="text-xs text-zinc-500 font-medium tracking-wide font-mono uppercase">Inpainting & Masking Engine</p>
+                  <h2 className="text-xl font-bold text-[var(--color-text-on-accent)] tracking-tight">Focus Edit Mode</h2>
+                  <p className="text-xs text-[var(--color-text-subtle)] font-medium tracking-wide font-mono uppercase">Inpainting & Masking Engine</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -373,7 +383,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                   Cancel
                 </button>
                 <button onClick={applyInpainting} disabled={isApplyingEdit}
-                  className="flex items-center gap-2 px-6 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all shadow-lg shadow-indigo-500/20"
+                  className="flex items-center gap-2 px-6 py-2 bg-[var(--color-accent)] hover:[background:var(--color-accent-hover)] disabled:opacity-50 text-white rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all shadow-lg"
                 >
                   {isApplyingEdit ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                   Generate Edit
@@ -405,7 +415,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
               <div className="w-80 space-y-6">
                 <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-5 space-y-6">
                   <div>
-                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] mb-3 block">Instruction</label>
+                    <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em] mb-3 block">Instruction</label>
                     <textarea
                       ref={editPromptRef}
                       value={editPrompt}
@@ -416,15 +426,16 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em]">Brush Size</label>
-                      <span className="text-[10px] font-mono text-indigo-400 font-bold">{brushSize}px</span>
+                      <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em]">Brush Size</label>
+                      <span className="text-[10px] font-mono text-[var(--color-accent)] font-bold">{brushSize}px</span>
                     </div>
                     <input type="range" min="5" max="150" value={brushSize} onChange={(e) => setBrushSize(parseInt(e.target.value))}
-                      className="w-full accent-indigo-500 h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer"
+                      className="w-full h-1.5 bg-zinc-800 rounded-lg appearance-none cursor-pointer"
+                      style={{ accentColor: 'var(--color-accent)' }}
                     />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] block">Brush Color</label>
+                    <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em] block">Brush Color</label>
                     <div className="flex gap-2.5">
                       {[
                         { color: 'rgba(57, 255, 20, 0.8)', label: 'Green' },
@@ -438,9 +449,12 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                       ))}
                     </div>
                   </div>
-                  <div className="p-4 bg-indigo-500/5 border border-indigo-500/10 rounded-xl">
-                    <div className="flex items-start gap-2 text-[10px] text-indigo-300 font-medium leading-relaxed">
-                      <Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                  <div
+                    className="p-4 rounded-xl"
+                    style={{ background: 'var(--color-accent-soft)', border: '1px solid var(--color-accent-border)' }}
+                  >
+                    <div className="flex items-start gap-2 text-[10px] text-[var(--color-text-muted)] font-medium leading-relaxed">
+                      <Info className="w-3.5 h-3.5 shrink-0 mt-0.5 text-[var(--color-accent)]" />
                       Tip: 마스크 영역은 수정될 곳이며, 브러시 색상은 작업 편의를 위한 시각적 요소입니다.
                     </div>
                   </div>
@@ -448,7 +462,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
               </div>
             </div>
 
-            <div className="mt-6 flex items-center gap-6 text-[10px] font-mono font-bold text-zinc-600 uppercase tracking-widest">
+            <div className="mt-6 flex items-center gap-6 text-[10px] font-mono font-bold text-[var(--color-text-subtle)] uppercase tracking-widest">
               <span>Ready for Processing</span>
               <div className="w-1 h-1 rounded-full bg-zinc-800" />
               <span>Hardware Acceleration Enabled</span>

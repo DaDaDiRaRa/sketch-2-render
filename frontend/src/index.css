@@ -1,7 +1,19 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+@import "./kunwon-tokens.css";
 @import "tailwindcss";
 
 @theme {
   --animate-spin-slow: spin 3s linear infinite;
+}
+
+body {
+  font-family: var(--font-primary);
+  background: var(--color-bg-page);
+  color: var(--color-text-body);
+}
+
+@utility accent-brand {
+  accent-color: var(--color-accent);
 }
 
 @utility scrollbar-hide {
