@@ -230,9 +230,9 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
   };
 
   return (
-    <div className="lg:col-span-5 relative">
-      <div className="sticky top-24">
-        <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-4 flex flex-col h-[calc(100vh-8rem)]">
+    <div className="h-full flex flex-col">
+      <div className="flex flex-col flex-1 min-h-0">
+        <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-4 flex flex-col h-full">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <ImageIcon className="w-4 h-4 text-[var(--color-text-muted)]" />

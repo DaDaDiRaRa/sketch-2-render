@@ -83,7 +83,7 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
   }) => (
     <div
       {...getRootProps()}
-      className={`relative flex-1 aspect-square rounded-lg border-2 border-dashed transition-all cursor-pointer overflow-hidden ${
+      className={`relative w-full h-28 rounded-lg border-2 border-dashed transition-all cursor-pointer overflow-hidden ${
         isDragActive
           ? `${accentClass} bg-opacity-10`
           : 'border-[var(--color-border)] hover:[border-color:var(--color-border-strong)] bg-[var(--color-bg-surface-alt)]'
@@ -117,7 +117,7 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
   );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="flex flex-col gap-3">
       {/* ControlNet Node */}
       <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-3 flex flex-col">
         <div className="flex items-center gap-2 mb-3 text-[var(--color-text-primary)]">

@@ -60,61 +60,66 @@ export default function App() {
 
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-page)] pb-20">
-      <main className="max-w-7xl mx-auto px-6 py-8">
-        <header className="mb-8 flex items-baseline gap-4">
-          <h1 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)]">Sketch 2 Render</h1>
-          <div className="flex items-baseline gap-2">
-            <span className="text-lg text-[var(--color-text-muted)] font-medium">for Exterior</span>
-            <span className="text-[10px] text-[var(--color-text-faint)] font-medium uppercase tracking-wider">
-              © 2026. Junghyun Kim. All rights reserved.
-            </span>
-          </div>
-        </header>
-
-        <div className="grid lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-7 space-y-6">
-            <ImageUploadNodes
-              controlNetImg={controlNetImg} setControlNetImg={setControlNetImg}
-              ipAdapterImg={ipAdapterImg} setIpAdapterImg={setIpAdapterImg}
-              florenceImg={florenceImg} setFlorenceImg={setFlorenceImg}
-              ipAdapterStrength={ipAdapterStrength} setIpAdapterStrength={setIpAdapterStrength}
-              florenceStrength={florenceStrength} setFlorenceStrength={setFlorenceStrength}
-            />
-            <SettingsPanel
-              temperature={temperature} setTemperature={setTemperature}
-              seedMode={seedMode} setSeedMode={setSeedMode}
-              seedValue={seedValue} setSeedValue={setSeedValue}
-            />
-            <PromptPanel
-              positivePrompt={positivePrompt} setPositivePrompt={setPositivePrompt}
-              negativePrompt={negativePrompt} setNegativePrompt={setNegativePrompt}
-            />
-            <button
-              onClick={handleGenerateRendering}
-              disabled={!controlNetImg || isGenerating}
-              className="w-full py-4 rounded-xl font-bold uppercase tracking-wide text-white flex items-center justify-center gap-2 transition-all disabled:opacity-50 shadow-md hover:[background:var(--color-accent-hover)]"
-              style={{ background: 'var(--color-accent)' }}
-            >
-              {isGenerating ? (
-                <><Loader2 className="w-5 h-5 animate-spin" /> Executing Pipeline...</>
-              ) : (
-                'Queue Prompt'
-              )}
-            </button>
-            {error && (
-              <p className="text-[var(--color-danger)] p-4 bg-[var(--color-danger-bg)] border border-[var(--color-danger-border)] rounded-xl text-sm">{error}</p>
-            )}
-          </div>
-          <div className="lg:col-span-5 relative">
-            <PreviewCanvas
-              resultImage={resultImage} setResultImage={setResultImage}
-              controlNetImg={controlNetImg}
-              isGenerating={isGenerating}
-            />
-          </div>
+    <div className="h-screen overflow-hidden flex flex-col bg-[var(--color-bg-page)]">
+      <header className="shrink-0 flex items-baseline gap-4 px-6 py-3 border-b border-[var(--color-border)]">
+        <h1 className="text-2xl font-bold tracking-tight text-[var(--color-text-primary)]">Sketch 2 Render</h1>
+        <div className="flex items-baseline gap-2">
+          <span className="text-base text-[var(--color-text-muted)] font-medium">for Exterior</span>
+          <span className="text-[10px] text-[var(--color-text-faint)] font-medium uppercase tracking-wider">
+            © 2026. Junghyun Kim. All rights reserved.
+          </span>
         </div>
-      </main>
+      </header>
+
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left Panel — uploads + generate */}
+        <div className="w-72 shrink-0 flex flex-col gap-3 p-4 border-r border-[var(--color-border)] overflow-y-auto">
+          <ImageUploadNodes
+            controlNetImg={controlNetImg} setControlNetImg={setControlNetImg}
+            ipAdapterImg={ipAdapterImg} setIpAdapterImg={setIpAdapterImg}
+            florenceImg={florenceImg} setFlorenceImg={setFlorenceImg}
+            ipAdapterStrength={ipAdapterStrength} setIpAdapterStrength={setIpAdapterStrength}
+            florenceStrength={florenceStrength} setFlorenceStrength={setFlorenceStrength}
+          />
+          <button
+            onClick={handleGenerateRendering}
+            disabled={!controlNetImg || isGenerating}
+            className="w-full py-3 rounded-xl font-bold uppercase tracking-wide text-white flex items-center justify-center gap-2 transition-all disabled:opacity-50 shadow-md hover:[background:var(--color-accent-hover)]"
+            style={{ background: 'var(--color-accent)' }}
+          >
+            {isGenerating ? (
+              <><Loader2 className="w-4 h-4 animate-spin" /> Processing...</>
+            ) : (
+              'Queue Prompt'
+            )}
+          </button>
+          {error && (
+            <p className="text-[var(--color-danger)] p-3 bg-[var(--color-danger-bg)] border border-[var(--color-danger-border)] rounded-xl text-xs">{error}</p>
+          )}
+        </div>
+
+        {/* Middle Panel — settings + prompts */}
+        <div className="w-[400px] shrink-0 flex flex-col gap-3 p-4 border-r border-[var(--color-border)] overflow-y-auto">
+          <SettingsPanel
+            temperature={temperature} setTemperature={setTemperature}
+            seedMode={seedMode} setSeedMode={setSeedMode}
+            seedValue={seedValue} setSeedValue={setSeedValue}
+          />
+          <PromptPanel
+            positivePrompt={positivePrompt} setPositivePrompt={setPositivePrompt}
+            negativePrompt={negativePrompt} setNegativePrompt={setNegativePrompt}
+          />
+        </div>
+
+        {/* Right Panel — preview canvas */}
+        <div className="flex-1 overflow-hidden p-4">
+          <PreviewCanvas
+            resultImage={resultImage} setResultImage={setResultImage}
+            controlNetImg={controlNetImg}
+            isGenerating={isGenerating}
+          />
+        </div>
+      </div>
     </div>
   );
 }

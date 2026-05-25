@@ -217,7 +217,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
                 setPositivePrompt(e.target.value);
               }
             }}
-            className="w-full h-40 bg-[var(--color-bg-input)] border border-[var(--color-border)] rounded-lg p-3 text-xs font-mono text-[var(--color-text-body)] focus:outline-none focus:[border-color:var(--color-success)] transition-colors resize-none"
+            className="w-full h-20 bg-[var(--color-bg-input)] border border-[var(--color-border)] rounded-lg p-3 text-xs font-mono text-[var(--color-text-body)] focus:outline-none focus:[border-color:var(--color-success)] transition-colors resize-none"
             placeholder="Optional: Type here or leave blank for Auto-Pilot rendering..."
           />
           {showComparison && originalPositivePrompt && (
@@ -283,7 +283,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
               setNegativePrompt(e.target.value);
             }
           }}
-          className="w-full h-24 bg-[var(--color-bg-input)] border border-[var(--color-border)] rounded-lg p-3 text-xs font-mono text-[var(--color-text-body)] focus:outline-none focus:[border-color:var(--color-danger)] transition-colors resize-none"
+          className="w-full h-14 bg-[var(--color-bg-input)] border border-[var(--color-border)] rounded-lg p-3 text-xs font-mono text-[var(--color-text-body)] focus:outline-none focus:[border-color:var(--color-danger)] transition-colors resize-none"
         />
         {showNegativeComparison && originalNegativePrompt && (
           <div className="mt-2 flex items-center gap-1.5 text-[9px] text-[var(--color-danger)] opacity-70 font-medium italic">
