@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Loader2, Shield } from 'lucide-react';
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 import ImageUploadNodes from './components/ImageUploadNodes';
 import SettingsPanel from './components/SettingsPanel';
 import PromptPanel from './components/PromptPanel';
@@ -8,12 +8,6 @@ import { generateRendering } from './api/render';
 import type { ImageFile } from './types';
 
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => sessionStorage.getItem('site_auth') === 'true',
-  );
-  const [passwordInput, setPasswordInput] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-
   const [controlNetImg, setControlNetImg] = useState<ImageFile | null>(null);
   const [ipAdapterImg, setIpAdapterImg] = useState<ImageFile | null>(null);
   const [florenceImg, setFlorenceImg] = useState<ImageFile | null>(null);
@@ -31,18 +25,6 @@ export default function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-
-  const handlePasswordSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (passwordInput === '0908') {
-      setIsAuthenticated(true);
-      sessionStorage.setItem('site_auth', 'true');
-      setPasswordError('');
-    } else {
-      setPasswordError('Incorrect password');
-      setPasswordInput('');
-    }
-  };
 
   const handleGenerateRendering = async () => {
     if (!controlNetImg) return setError('Please upload the Structure image.');
@@ -75,45 +57,7 @@ export default function App() {
     }
   };
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-[var(--color-bg-page)] flex items-center justify-center p-4">
-        <div
-          className="rounded-2xl p-8 w-full max-w-md text-center"
-          style={{
-            background: 'var(--color-bg-surface)',
-            border: '1px solid var(--color-border)',
-            boxShadow: 'var(--shadow-lg)',
-          }}
-        >
-          <Shield className="w-12 h-12 text-[var(--color-accent)] mx-auto mb-4" />
-          <h1 className="text-2xl font-bold mb-2 text-[var(--color-text-primary)]">Sketch 2 Render</h1>
-          <p className="text-[var(--color-text-muted)] text-sm mb-6">Enter password to access ArchViz Engine</p>
-          <form onSubmit={handlePasswordSubmit}>
-            <input
-              type="password"
-              value={passwordInput}
-              onChange={(e) => setPasswordInput(e.target.value)}
-              placeholder="Password"
-              className="w-full rounded-xl px-4 py-3 mb-4 text-center focus:outline-none focus:[border-color:var(--color-accent)] tracking-widest text-[var(--color-text-primary)]"
-              style={{
-                background: 'var(--color-bg-input)',
-                border: '1px solid var(--color-border)',
-              }}
-            />
-            {passwordError && <p className="text-[var(--color-danger)] text-sm mb-4">{passwordError}</p>}
-            <button
-              type="submit"
-              className="w-full py-3 rounded-xl font-bold transition-all text-white hover:[background:var(--color-accent-hover)]"
-              style={{ background: 'var(--color-accent)' }}
-            >
-              Unlock
-            </button>
-          </form>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-[var(--color-bg-page)] pb-20">
