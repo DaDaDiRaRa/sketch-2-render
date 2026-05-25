@@ -134,7 +134,7 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
           img={controlNetImg}
           onClear={() => setControlNetImg(null)}
           alt="ControlNet"
-          label="Clay Model / Base"
+          label="기본 이미지"
           accentClass="border-[var(--color-info)]"
         />
       </div>
@@ -143,7 +143,7 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
       <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-3 flex flex-col">
         <div className="flex items-center gap-2 mb-3 text-[var(--color-text-primary)]">
           <Palette className="w-4 h-4 text-[var(--color-purple)]" />
-          <h3 className="text-sm font-medium">IPAdapter (Style)</h3>
+          <h3 className="text-sm font-medium">IPAdapter (스타일)</h3>
           <Tooltip text="원하는 색감이나 재질이 담긴 이미지를 넣으세요. 건물에 그 느낌(재질, 빛)만 입혀줍니다.">
             <Info className="w-3.5 h-3.5 text-[var(--color-text-faint)] cursor-help" />
           </Tooltip>
@@ -155,13 +155,13 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
           img={ipAdapterImg}
           onClear={() => setIpAdapterImg(null)}
           alt="IPAdapter"
-          label="Style Reference"
+          label="스타일 레퍼런스"
           accentClass="border-[var(--color-purple)]"
         />
         <div className="mt-3 space-y-1.5">
           <div className="flex items-center justify-between px-1">
             <label className={`text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 ${ipAdapterImg ? 'text-[var(--color-text-muted)]' : 'text-[var(--color-text-subtle)]'}`}>
-              Style Strength
+              스타일 강도
               <Tooltip text="레퍼런스 이미지의 영향력을 조절합니다. 0에 가까우면 무시하고, 1에 가까우면 사진을 그대로 따릅니다.">
                 <Info className="w-3 h-3 cursor-help" />
               </Tooltip>
@@ -182,7 +182,7 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
       <div className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-3 flex flex-col">
         <div className="flex items-center gap-2 mb-3 text-[var(--color-text-primary)]">
           <ScanText className="w-4 h-4 text-[var(--color-warning)]" />
-          <h3 className="text-sm font-medium">Florence (Context)</h3>
+          <h3 className="text-sm font-medium">Florence (컨텍스트)</h3>
           <Tooltip text="주변 배경이나 분위기를 결정합니다. 숲, 도시, 하늘 등 환경 정보가 담긴 이미지를 활용하세요.">
             <Info className="w-3.5 h-3.5 text-[var(--color-text-faint)] cursor-help" />
           </Tooltip>
@@ -194,13 +194,13 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
           img={florenceImg}
           onClear={() => setFlorenceImg(null)}
           alt="Florence"
-          label="Context Image"
+          label="컨텍스트 이미지"
           accentClass="border-[var(--color-warning)]"
         />
         <div className="mt-3 space-y-1.5">
           <div className="flex items-center justify-between px-1">
             <label className={`text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 ${florenceImg ? 'text-[var(--color-text-muted)]' : 'text-[var(--color-text-subtle)]'}`}>
-              Context Strength
+              컨텍스트 강도
               <Tooltip text="레퍼런스 이미지의 영향력을 조절합니다. 0에 가까우면 무시하고, 1에 가까우면 사진을 그대로 따릅니다.">
                 <Info className="w-3 h-3 cursor-help" />
               </Tooltip>

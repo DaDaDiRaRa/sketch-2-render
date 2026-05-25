@@ -14,28 +14,28 @@ interface StylePreset {
 const STYLE_PRESETS: StylePreset[] = [
   {
     id: 'sunny',
-    name: 'Sunny Day',
+    name: '맑은 날',
     icon: '☀️',
     positive: '(Masterpiece:1.3), (photorealistic:1.4), best quality, high quality, Ultra-detailed, 8k resolution, architecture photography, bright sunny day, clear blue sky, sharp shadows, vibrant colors, realistic materials, concrete, glass, wood, lush green landscaping.',
     negative: '(worst quality:1.4), (low quality:1.4), monochrome, flat lighting, overcast, rain, night, fog, distorted architecture, blurry, low resolution.',
   },
   {
     id: 'night',
-    name: 'Night Cinematic',
+    name: '야간 시네마틱',
     icon: '🌙',
     positive: '(Masterpiece:1.3), (photorealistic:1.4), best quality, high quality, Ultra-detailed, 8k resolution, architecture photography, cinematic night lighting, warm interior glow, cool exterior moonlight, long exposure, reflective surfaces, windows glowing, deep shadows, atmospheric.',
     negative: '(worst quality:1.4), (low quality:1.4), daylight, sun, bright sky, flat lighting, overexposed, low contrast, noisy, grainy.',
   },
   {
     id: 'perspective',
-    name: 'Eye-Level',
+    name: '눈높이 시점',
     icon: '🚶',
     positive: '(Masterpiece:1.3), (photorealistic:1.4), Professional architectural exterior photography, eye-level perspective, human scale, street level view, corrected vertical lines, highly detailed facade, realistic street-side vegetation, 35mm lens, high dynamic range.',
     negative: '(worst quality:1.4), (low quality:1.4), bird view, high angle, looking down, interior, distorted lines, low-resolution, blurry trees, unrealistic shadows.',
   },
   {
     id: 'birdseye',
-    name: 'Birds-Eye',
+    name: '조감도',
     icon: '🦅',
     positive: "(Masterpiece:1.3), (photorealistic:1.4), High-angle aerial photography, bird's-eye view, architectural masterplan perspective, expansive site context, looking down at the building, miniature effect, realistic surrounding urban fabric and lush landscaping, volumetric lighting.",
     negative: '(worst quality:1.4), (low quality:1.4), eye level, street view, interior, low angle view, looking up, distorted perspective, blurry background, dark lighting.',
@@ -145,7 +145,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
       <section className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-4">
         <div className="flex items-center gap-2 mb-3">
           <Palette className="w-4 h-4 text-[var(--color-text-muted)]" />
-          <h2 className="text-sm font-medium text-[var(--color-text-primary)] font-mono uppercase tracking-wider">Quick Styles</h2>
+          <h2 className="text-sm font-medium text-[var(--color-text-primary)] font-mono uppercase tracking-wider">빠른 스타일</h2>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           {stylePresets.map((preset) => (
@@ -173,7 +173,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[var(--color-success)]" />
-            <h2 className="text-sm font-medium text-[var(--color-success)] font-mono uppercase tracking-wider">Positive Prompt (CLIP Text Encode)</h2>
+            <h2 className="text-sm font-medium text-[var(--color-success)] font-mono uppercase tracking-wider">긍정 프롬프트</h2>
             <Tooltip text="나오길 원하는 것을 적으세요 (예: 푸른 하늘, 대리석 벽). 빈칸으로 두면 AI가 이미지를 분석해 알아서 그립니다.">
               <Info className="w-3.5 h-3.5 text-[var(--color-text-faint)] cursor-help" />
             </Tooltip>
@@ -185,13 +185,13 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
                   onClick={() => setShowComparison(false)}
                   className={`px-2 py-1 text-[10px] font-bold uppercase rounded-md transition-all ${!showComparison ? 'bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] shadow-sm' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-body)]'}`}
                 >
-                  Original
+                  원본
                 </button>
                 <button
                   onClick={() => setShowComparison(true)}
                   className={`px-2 py-1 text-[10px] font-bold uppercase rounded-md transition-all ${showComparison ? 'bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] shadow-sm' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-body)]'}`}
                 >
-                  Improved
+                  개선됨
                 </button>
               </div>
             )}
@@ -201,7 +201,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
               className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-success-bg)] hover:[background:var(--color-success-bg)] text-[var(--color-success)] border border-[var(--color-success-border)] rounded-lg text-[10px] font-bold uppercase transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isImproving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
-              Improve
+              개선
             </button>
           </div>
         </div>
@@ -218,7 +218,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
               }
             }}
             className="w-full h-20 bg-[var(--color-bg-input)] border border-[var(--color-border)] rounded-lg p-3 text-xs font-mono text-[var(--color-text-body)] focus:outline-none focus:[border-color:var(--color-success)] transition-colors resize-none"
-            placeholder="Optional: Type here or leave blank for Auto-Pilot rendering..."
+            placeholder="여기에 입력하거나 비워두면 AI가 자동으로 분석합니다..."
           />
           {showComparison && originalPositivePrompt && (
             <div className="absolute top-2 right-2 px-2 py-1 bg-[var(--color-success-bg)] text-[var(--color-success)] text-[10px] font-bold rounded border border-[var(--color-success-border)] backdrop-blur-sm">
@@ -233,7 +233,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[var(--color-danger)]" />
-            <h2 className="text-sm font-medium text-[var(--color-danger)] font-mono uppercase tracking-wider">Negative Prompt (CLIP Text Encode)</h2>
+            <h2 className="text-sm font-medium text-[var(--color-danger)] font-mono uppercase tracking-wider">부정 프롬프트</h2>
             <Tooltip text="나오지 않기를 원하는 것을 적으세요 (예: 왜곡된 선, 사람, 자동차). Enhance 버튼을 눌러 품질을 높이세요.">
               <Info className="w-3.5 h-3.5 text-[var(--color-text-faint)] cursor-help" />
             </Tooltip>
@@ -245,13 +245,13 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
                   onClick={() => setShowNegativeComparison(false)}
                   className={`px-2 py-1 text-[10px] font-bold uppercase rounded-md transition-all ${!showNegativeComparison ? 'bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] shadow-sm' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-body)]'}`}
                 >
-                  Original
+                  원본
                 </button>
                 <button
                   onClick={() => setShowNegativeComparison(true)}
                   className={`px-2 py-1 text-[10px] font-bold uppercase rounded-md transition-all ${showNegativeComparison ? 'bg-[var(--color-bg-surface)] text-[var(--color-text-primary)] shadow-sm' : 'text-[var(--color-text-muted)] hover:text-[var(--color-text-body)]'}`}
                 >
-                  Improved
+                  개선됨
                 </button>
               </div>
             )}
@@ -265,9 +265,9 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
               }`}
             >
               {isImprovingNegative ? (
-                <><Loader2 className="w-3 h-3 animate-spin" /> Refining...</>
+                <><Loader2 className="w-3 h-3 animate-spin" /> 처리 중...</>
               ) : (
-                <><Shield className="w-3 h-3" /> Improve</>
+                <><Shield className="w-3 h-3" /> 개선</>
               )}
             </button>
           </div>

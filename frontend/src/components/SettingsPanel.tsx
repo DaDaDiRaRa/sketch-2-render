@@ -26,7 +26,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       <section className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-4">
         <div className="flex items-center gap-2 mb-4">
           <Sparkles className="w-4 h-4 text-[var(--color-accent)]" />
-          <h2 className="text-sm font-medium text-[var(--color-text-primary)] uppercase tracking-wider">Imagination Level</h2>
+          <h2 className="text-sm font-medium text-[var(--color-text-primary)] uppercase tracking-wider">창의성 수준</h2>
           <Tooltip text="AI가 얼마나 창의적으로 그릴지 결정합니다. 낮으면 원본에 충실하고, 높으면 배경과 조명이 화려해집니다.">
             <Info className="w-3.5 h-3.5 text-[var(--color-text-faint)] cursor-help" />
           </Tooltip>
@@ -34,9 +34,9 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
         <div className="space-y-4">
           <div className="flex bg-[var(--color-bg-surface-alt)] p-1 rounded-lg border border-[var(--color-border)]">
             {[
-              { label: 'Conservative', val: 0.2 },
-              { label: 'Balanced', val: 0.7 },
-              { label: 'Creative', val: 1.2 },
+              { label: '보수', val: 0.2 },
+              { label: '균형', val: 0.7 },
+              { label: '창의', val: 1.2 },
             ].map((preset) => (
               <button
                 key={preset.label}
@@ -53,7 +53,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
           </div>
           <div className="space-y-3">
             <div className="flex items-center justify-between px-1">
-              <label className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider">Temperature</label>
+              <label className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider">온도</label>
               <span className="text-[10px] font-mono text-[var(--color-accent)] font-bold">{temperature.toFixed(1)}</span>
             </div>
             <input
@@ -67,7 +67,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
             />
             <p className="text-[9px] text-[var(--color-text-faint)] font-medium italic px-1 flex items-center gap-1">
               <Info className="w-2.5 h-2.5" />
-              Lower for precision, higher for creative surroundings.
+              낮을수록 정밀, 높을수록 창의적
             </p>
           </div>
         </div>
@@ -76,7 +76,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
       <section className="bg-[var(--color-bg-surface)] border border-[var(--color-border)] rounded-xl p-4">
         <div className="flex items-center gap-2 mb-4">
           <Dices className="w-4 h-4 text-[var(--color-accent)]" />
-          <h2 className="text-sm font-medium text-[var(--color-text-primary)] uppercase tracking-wider">Seed Control</h2>
+          <h2 className="text-sm font-medium text-[var(--color-text-primary)] uppercase tracking-wider">시드 제어</h2>
           <Tooltip text="이미지의 '고유 번호'입니다. 랜덤은 매번 새롭게, 고정(Fixed)은 마음에 드는 구도를 유지하며 수정할 때 씁니다.">
             <Info className="w-3.5 h-3.5 text-[var(--color-text-faint)] cursor-help" />
           </Tooltip>
@@ -91,7 +91,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   : 'text-[var(--color-text-muted)] hover:[color:var(--color-text-body)]'
               }`}
             >
-              Random
+              랜덤
             </button>
             <button
               onClick={() => setSeedMode('fixed')}
@@ -101,11 +101,11 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                   : 'text-[var(--color-text-muted)] hover:[color:var(--color-text-body)]'
               }`}
             >
-              Fixed
+              고정
             </button>
           </div>
           <div className="space-y-1.5">
-            <label className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider ml-1">Active Seed</label>
+            <label className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider ml-1">활성 시드</label>
             <div className="relative">
               <input
                 type="number"
@@ -117,7 +117,7 @@ const SettingsPanel: React.FC<SettingsPanelProps> = ({
                     ? 'text-[var(--color-text-subtle)] cursor-not-allowed opacity-60'
                     : 'text-[var(--color-text-body)]'
                 }`}
-                placeholder={seedMode === 'random' ? 'Generating randomly...' : 'Enter fixed seed...'}
+                placeholder={seedMode === 'random' ? '랜덤 생성 중...' : '고정 시드 입력...'}
               />
               {seedMode === 'random' && (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2">

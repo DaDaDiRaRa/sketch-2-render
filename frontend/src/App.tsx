@@ -88,9 +88,9 @@ export default function App() {
             style={{ background: 'var(--color-accent)' }}
           >
             {isGenerating ? (
-              <><Loader2 className="w-4 h-4 animate-spin" /> Processing...</>
+              <><Loader2 className="w-4 h-4 animate-spin" /> 처리 중...</>
             ) : (
-              'Queue Prompt'
+              '렌더링 시작'
             )}
           </button>
           {error && (

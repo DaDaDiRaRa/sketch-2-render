@@ -236,7 +236,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <ImageIcon className="w-4 h-4 text-[var(--color-text-muted)]" />
-              <h2 className="text-sm font-medium text-[var(--color-text-primary)] font-mono uppercase tracking-wider">Preview Image Node</h2>
+              <h2 className="text-sm font-medium text-[var(--color-text-primary)] font-mono uppercase tracking-wider">미리보기</h2>
             </div>
             <div className="flex items-center gap-2">
               {resultImage && (
@@ -246,7 +246,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                     className="p-1.5 rounded-md transition-all flex items-center gap-1.5 text-[10px] font-bold uppercase border bg-[var(--color-bg-surface-alt)] border-[var(--color-border)] text-[var(--color-text-muted)] hover:[color:var(--color-text-primary)] hover:[border-color:var(--color-border-strong)]"
                   >
                     <Pencil className="w-3 h-3" />
-                    Enter Focus Edit
+                    편집 모드
                   </button>
                   {history.length > 0 && (
                     <button
@@ -254,7 +254,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                       className="p-1.5 bg-[var(--color-bg-surface-alt)] border border-[var(--color-border)] rounded-md transition-colors text-[var(--color-text-muted)] hover:[color:var(--color-text-primary)] hover:[border-color:var(--color-border-strong)] flex items-center gap-1.5 text-[10px] font-bold uppercase"
                     >
                       <Undo2 className="w-3 h-3" />
-                      Undo
+                      되돌리기
                     </button>
                   )}
                   <button onClick={handleDownload} className="p-1.5 bg-[var(--color-bg-surface-alt)] border border-[var(--color-border)] rounded-md transition-colors text-[var(--color-text-muted)] hover:[color:var(--color-text-primary)] hover:[border-color:var(--color-border-strong)]">
@@ -269,7 +269,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
             <div className="mb-4 p-3 bg-[var(--color-bg-surface-alt)] border border-[var(--color-border)] rounded-lg">
               <div className="flex items-center gap-2 mb-3">
                 <Maximize2 className="w-3 h-3 text-[var(--color-text-muted)]" />
-                <span className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider">Professional Upscale</span>
+                <span className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider">고해상도 변환</span>
               </div>
               <div className="flex gap-2">
                 {['1K', '2K', '4K'].map((res) => (
@@ -339,7 +339,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                   >
                     <ImageIcon className="w-6 h-6" />
                   </div>
-                  <p className="text-xs font-mono text-[var(--color-text-subtle)]">Waiting for KSampler output...</p>
+                  <p className="text-xs font-mono text-[var(--color-text-subtle)]">렌더링 대기 중...</p>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -348,8 +348,8 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
               <div className="absolute inset-0 backdrop-blur-sm flex flex-col items-center justify-center gap-4" style={{ background: 'var(--color-overlay-dark)' }}>
                 <Loader2 className="w-8 h-8 text-[var(--color-accent)] animate-spin" />
                 <div className="text-center font-mono">
-                  <p className="text-sm text-[var(--color-text-on-accent)]">Processing Nodes...</p>
-                  <p className="text-xs text-[var(--color-text-subtle)] mt-1">Applying ControlNet & IPAdapter</p>
+                  <p className="text-sm text-[var(--color-text-on-accent)]">처리 중...</p>
+                  <p className="text-xs text-[var(--color-text-subtle)] mt-1">ControlNet & IPAdapter 적용 중</p>
                 </div>
               </div>
             )}
@@ -370,23 +370,23 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                   <Pencil className="w-5 h-5 text-[var(--color-accent)]" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold text-[var(--color-text-on-accent)] tracking-tight">Focus Edit Mode</h2>
-                  <p className="text-xs text-[var(--color-text-subtle)] font-medium tracking-wide font-mono uppercase">Inpainting & Masking Engine</p>
+                  <h2 className="text-xl font-bold text-[var(--color-text-on-accent)] tracking-tight">포커스 편집 모드</h2>
+                  <p className="text-xs text-[var(--color-text-subtle)] font-medium tracking-wide font-mono uppercase">인페인팅 & 마스킹</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <button onClick={clearMask} className="flex items-center gap-2 px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all" style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.6)' }} onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.15)'; (e.currentTarget as HTMLButtonElement).style.color = 'rgba(255,255,255,0.9)'; }} onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.08)'; (e.currentTarget as HTMLButtonElement).style.color = 'rgba(255,255,255,0.6)'; }}>
                   <Eraser className="w-4 h-4" />
-                  Clear Mask
+                  마스크 지우기
                 </button>
                 <button onClick={() => setIsEditing(false)} className="px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all" style={{ background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.75)' }} onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.2)'; }} onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.12)'; }}>
-                  Cancel
+                  취소
                 </button>
                 <button onClick={applyInpainting} disabled={isApplyingEdit}
                   className="flex items-center gap-2 px-6 py-2 bg-[var(--color-accent)] hover:[background:var(--color-accent-hover)] disabled:opacity-50 text-white rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all shadow-lg"
                 >
                   {isApplyingEdit ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
-                  Generate Edit
+                  편집 생성
                 </button>
               </div>
             </div>
@@ -415,18 +415,18 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
               <div className="w-80 space-y-6">
                 <div className="rounded-2xl p-5 space-y-6" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
                   <div>
-                    <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em] mb-3 block">Instruction</label>
+                    <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em] mb-3 block">편집 지시사항</label>
                     <textarea
                       ref={editPromptRef}
                       value={editPrompt}
                       onChange={(e) => setEditPrompt(e.target.value)}
-                      placeholder="e.g. 'Add a wooden balcony here', 'Change to a glass facade'..."
+                      placeholder="예: '여기에 목재 발코니 추가', '유리 파사드로 변경'..."
                       className="w-full h-32 rounded-xl p-4 text-xs font-mono text-white focus:outline-none transition-all resize-none leading-relaxed focus:[border-color:var(--color-accent)]" style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.1)' }}
                     />
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em]">Brush Size</label>
+                      <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em]">브러시 크기</label>
                       <span className="text-[10px] font-mono text-[var(--color-accent)] font-bold">{brushSize}px</span>
                     </div>
                     <input type="range" min="5" max="150" value={brushSize} onChange={(e) => setBrushSize(parseInt(e.target.value))}
@@ -435,7 +435,7 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
                     />
                   </div>
                   <div className="space-y-3">
-                    <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em] block">Brush Color</label>
+                    <label className="text-[10px] font-black text-[var(--color-text-subtle)] uppercase tracking-[0.2em] block">브러시 색상</label>
                     <div className="flex gap-2.5">
                       {[
                         { color: 'rgba(57, 255, 20, 0.8)', label: 'Green' },
@@ -463,9 +463,9 @@ const PreviewCanvas: React.FC<PreviewCanvasProps> = ({
             </div>
 
             <div className="mt-6 flex items-center gap-6 text-[10px] font-mono font-bold text-[var(--color-text-subtle)] uppercase tracking-widest">
-              <span>Ready for Processing</span>
+              <span>처리 준비 완료</span>
               <div className="w-1 h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
-              <span>Hardware Acceleration Enabled</span>
+              <span>하드웨어 가속 활성화</span>
               <div className="w-1 h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.15)' }} />
               <span>Gemini 2.0 Advanced Arch-Inpainter</span>
             </div>
