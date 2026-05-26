@@ -19,6 +19,7 @@ export interface RenderRequest {
 export interface RenderResponse {
   image_base64: string;
   mime_type: string;
+  used_seed: number;
 }
 
 export async function generateRendering(req: RenderRequest): Promise<RenderResponse> {

@@ -24,6 +24,7 @@ export default function App() {
 
   const [isGenerating, setIsGenerating] = useState(false);
   const [resultImage, setResultImage] = useState<string | null>(null);
+  const [lastUsedSeed, setLastUsedSeed] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleGenerateRendering = async () => {
@@ -49,6 +50,7 @@ export default function App() {
         temperature,
       });
       setResultImage(`data:${result.mime_type};base64,${result.image_base64}`);
+      setLastUsedSeed(result.used_seed);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'An error occurred.';
       setError(message);
@@ -104,6 +106,7 @@ export default function App() {
             temperature={temperature} setTemperature={setTemperature}
             seedMode={seedMode} setSeedMode={setSeedMode}
             seedValue={seedValue} setSeedValue={setSeedValue}
+            lastUsedSeed={lastUsedSeed}
           />
           <PromptPanel
             positivePrompt={positivePrompt} setPositivePrompt={setPositivePrompt}

@@ -18,6 +18,75 @@ interface ImageUploadNodesProps {
   setFlorenceStrength?: (val: number) => void;
 }
 
+const fileToBase64 = (file: File): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve((reader.result as string).split(',')[1]);
+    reader.onerror = (error) => reject(error);
+  });
+
+const getImageDimensions = (file: File): Promise<{ width: number; height: number }> =>
+  new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
+    img.src = URL.createObjectURL(file);
+  });
+
+const UploadZone = ({
+  getRootProps,
+  getInputProps,
+  isDragActive,
+  img,
+  onClear,
+  alt,
+  label,
+  accentClass,
+}: {
+  getRootProps: () => React.HTMLAttributes<HTMLDivElement>;
+  getInputProps: () => React.InputHTMLAttributes<HTMLInputElement>;
+  isDragActive: boolean;
+  img: ImageFile | null;
+  onClear: () => void;
+  alt: string;
+  label: string;
+  accentClass: string;
+}) => (
+  <div
+    {...getRootProps()}
+    className={`relative w-full h-28 rounded-lg border-2 border-dashed transition-all cursor-pointer overflow-hidden ${
+      isDragActive
+        ? `${accentClass} bg-opacity-10`
+        : 'border-[var(--color-border)] hover:[border-color:var(--color-border-strong)] bg-[var(--color-bg-surface-alt)]'
+    }`}
+  >
+    <input {...getInputProps()} />
+    {img ? (
+      <>
+        <img src={img.preview} alt={alt} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+        <AnimatePresence>
+          <motion.button
+            key="clear"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={(e) => { e.stopPropagation(); onClear(); }}
+            className="absolute top-2 right-2 p-1.5 rounded-full text-white transition-colors z-10 hover:[background:var(--color-accent)]"
+            style={{ background: 'var(--color-overlay, rgba(0,0,0,0.5))' }}
+          >
+            <X className="w-4 h-4" />
+          </motion.button>
+        </AnimatePresence>
+      </>
+    ) : (
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-[var(--color-text-muted)] gap-2 p-4 text-center">
+        <Upload className="w-6 h-6" />
+        <p className="text-xs">{label}</p>
+      </div>
+    )}
+  </div>
+);
+
 const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
   controlNetImg,
   setControlNetImg,
@@ -30,91 +99,36 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
   florenceStrength = 0.8,
   setFlorenceStrength,
 }) => {
-  const fileToBase64 = (file: File): Promise<string> =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve((reader.result as string).split(',')[1]);
-      reader.onerror = (error) => reject(error);
-    });
+  const handleDropCN = useCallback(async (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      const base64 = await fileToBase64(file);
+      const dimensions = await getImageDimensions(file);
+      setControlNetImg({ file, preview: URL.createObjectURL(file), base64, ...dimensions });
+    }
+  }, [setControlNetImg]);
 
-  const getImageDimensions = (file: File): Promise<{ width: number; height: number }> =>
-    new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => resolve({ width: img.naturalWidth, height: img.naturalHeight });
-      img.src = URL.createObjectURL(file);
-    });
+  const handleDropIP = useCallback(async (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      const base64 = await fileToBase64(file);
+      const dimensions = await getImageDimensions(file);
+      setIpAdapterImg({ file, preview: URL.createObjectURL(file), base64, ...dimensions });
+    }
+  }, [setIpAdapterImg]);
 
-  const createDropHandler = (setter: (img: ImageFile | null) => void) =>
-    useCallback(
-      async (acceptedFiles: File[]) => {
-        const file = acceptedFiles[0];
-        if (file) {
-          const base64 = await fileToBase64(file);
-          const dimensions = await getImageDimensions(file);
-          setter({ file, preview: URL.createObjectURL(file), base64, ...dimensions });
-        }
-      },
-      [setter],
-    );
+  const handleDropFL = useCallback(async (acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      const base64 = await fileToBase64(file);
+      const dimensions = await getImageDimensions(file);
+      setFlorenceImg({ file, preview: URL.createObjectURL(file), base64, ...dimensions });
+    }
+  }, [setFlorenceImg]);
 
-  const { getRootProps: getRootCN, getInputProps: getInputCN, isDragActive: isDragCN } = useDropzone({ onDrop: createDropHandler(setControlNetImg), accept: { 'image/*': [] }, multiple: false } as Parameters<typeof useDropzone>[0]);
-  const { getRootProps: getRootIP, getInputProps: getInputIP, isDragActive: isDragIP } = useDropzone({ onDrop: createDropHandler(setIpAdapterImg), accept: { 'image/*': [] }, multiple: false } as Parameters<typeof useDropzone>[0]);
-  const { getRootProps: getRootFL, getInputProps: getInputFL, isDragActive: isDragFL } = useDropzone({ onDrop: createDropHandler(setFlorenceImg), accept: { 'image/*': [] }, multiple: false } as Parameters<typeof useDropzone>[0]);
-
-  const UploadZone = ({
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    img,
-    onClear,
-    alt,
-    label,
-    accentClass,
-  }: {
-    getRootProps: () => React.HTMLAttributes<HTMLDivElement>;
-    getInputProps: () => React.InputHTMLAttributes<HTMLInputElement>;
-    isDragActive: boolean;
-    img: ImageFile | null;
-    onClear: () => void;
-    alt: string;
-    label: string;
-    accentClass: string;
-  }) => (
-    <div
-      {...getRootProps()}
-      className={`relative w-full h-28 rounded-lg border-2 border-dashed transition-all cursor-pointer overflow-hidden ${
-        isDragActive
-          ? `${accentClass} bg-opacity-10`
-          : 'border-[var(--color-border)] hover:[border-color:var(--color-border-strong)] bg-[var(--color-bg-surface-alt)]'
-      }`}
-    >
-      <input {...getInputProps()} />
-      {img ? (
-        <>
-          <img src={img.preview} alt={alt} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-          <AnimatePresence>
-            <motion.button
-              key="clear"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={(e) => { e.stopPropagation(); onClear(); }}
-              className="absolute top-2 right-2 p-1.5 rounded-full text-white transition-colors z-10 hover:[background:var(--color-accent)]"
-              style={{ background: 'var(--color-overlay, rgba(0,0,0,0.5))' }}
-            >
-              <X className="w-4 h-4" />
-            </motion.button>
-          </AnimatePresence>
-        </>
-      ) : (
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-[var(--color-text-muted)] gap-2 p-4 text-center">
-          <Upload className="w-6 h-6" />
-          <p className="text-xs">{label}</p>
-        </div>
-      )}
-    </div>
-  );
+  const { getRootProps: getRootCN, getInputProps: getInputCN, isDragActive: isDragCN } = useDropzone({ onDrop: handleDropCN, accept: { 'image/*': [] }, multiple: false });
+  const { getRootProps: getRootIP, getInputProps: getInputIP, isDragActive: isDragIP } = useDropzone({ onDrop: handleDropIP, accept: { 'image/*': [] }, multiple: false });
+  const { getRootProps: getRootFL, getInputProps: getInputFL, isDragActive: isDragFL } = useDropzone({ onDrop: handleDropFL, accept: { 'image/*': [] }, multiple: false });
 
   return (
     <div className="flex flex-col gap-3">
@@ -199,7 +213,7 @@ const ImageUploadNodes: React.FC<ImageUploadNodesProps> = ({
         />
         <div className="mt-3 space-y-1.5">
           <div className="flex items-center justify-between px-1">
-            <label className={`text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 ${florenceImg ? 'text-[var(--color-text-muted)]' : 'text-[var(--color-text-subtle)]'}`}>
+            <label className={`text-[10px] font-mono font-bold uppercase tracking-wider flex items-center gap-1 ${florenceImg ? 'text-[var(--color-text-muted)]' : 'text-[var(--color-text-subtle)]'}`}>
               컨텍스트 강도
               <Tooltip text="레퍼런스 이미지의 영향력을 조절합니다. 0에 가까우면 무시하고, 1에 가까우면 사진을 그대로 따릅니다.">
                 <Info className="w-3 h-3 cursor-help" />

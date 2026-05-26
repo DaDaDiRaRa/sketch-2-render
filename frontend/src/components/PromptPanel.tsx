@@ -197,7 +197,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
             )}
             <button
               onClick={handleImprovePrompt}
-              disabled={isImproving}
+              disabled={isImproving || !positivePrompt.trim()}
               className="flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-success-bg)] hover:[background:var(--color-success-bg)] text-[var(--color-success)] border border-[var(--color-success-border)] rounded-lg text-[10px] font-bold uppercase transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isImproving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Sparkles className="w-3 h-3" />}
@@ -213,6 +213,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
                 setPositivePrompt(e.target.value);
               } else if (originalPositivePrompt) {
                 setOriginalPositivePrompt(e.target.value);
+                setPositivePrompt(e.target.value);
               } else {
                 setPositivePrompt(e.target.value);
               }
@@ -279,6 +280,7 @@ const PromptPanel: React.FC<PromptPanelProps> = ({
               setNegativePrompt(e.target.value);
             } else if (originalNegativePrompt) {
               setOriginalNegativePrompt(e.target.value);
+              setNegativePrompt(e.target.value);
             } else {
               setNegativePrompt(e.target.value);
             }

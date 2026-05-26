@@ -28,6 +28,7 @@ class RenderRequest(BaseModel):
 class RenderResponse(BaseModel):
     image_base64: str
     mime_type: str
+    used_seed: int
 
 
 @router.post("/render", response_model=RenderResponse)
@@ -48,7 +49,7 @@ async def render(req: RenderRequest):
             seed=seed,
             temperature=req.temperature,
         )
-        return RenderResponse(image_base64=image_b64, mime_type=mime)
+        return RenderResponse(image_base64=image_b64, mime_type=mime, used_seed=seed)
     except ValueError as e:
         raise HTTPException(status_code=502, detail=str(e))
     except Exception as e:
