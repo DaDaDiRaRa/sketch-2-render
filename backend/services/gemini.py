@@ -107,7 +107,7 @@ def generate_render(
     depth   = _extract_depth(padded)
 
     parts = [
-        types.Part.from_text(
+        types.Part(text=
             "SYSTEM INSTRUCTION: You are a 'High-End Architectural Visualization (Arch-Viz) Engine' "
             "and a 'Deterministic ControlNet AI'. Your goal is to translate 3D structural guides "
             "(SketchUp/CAD base) and stylistic references into professional-grade renders.\n"
@@ -119,23 +119,23 @@ def generate_render(
             "5. NODE 5 [Context]: Extract Environment ONLY. Do not copy buildings.\n"
             "[Quality] 100% Locked perspective. Zero tolerance for distortion."
         ),
-        types.Part.from_text(
+        types.Part(text=
             "TASK: HIGH-FIDELITY ARCHITECTURAL RENDERING. DETERMINISTIC MODE: ON. STRUCTURAL FIDELITY: 100%."
         ),
-        types.Part.from_text(
+        types.Part(text=
             "NODE 1 [Base Geometry]: The padded original building structure. DO NOT stretch the building. "
             "Keep the white padded areas COMPLETELY PURE WHITE. ABSOLUTELY DO NOT draw any sky, ground, "
             "landscape, or building extensions into the white padding."
         ),
         types.Part(inline_data=types.Blob(data=padded,   mime_type="image/jpeg")),
-        types.Part.from_text("NODE 2 [Lineart Constraint]: STRICT BOUNDARY. Every edge must be preserved."),
+        types.Part(text="NODE 2 [Lineart Constraint]: STRICT BOUNDARY. Every edge must be preserved."),
         types.Part(inline_data=types.Blob(data=lineart,  mime_type="image/jpeg")),
-        types.Part.from_text("NODE 3 [Depth Map]: Maintain exact volume and perspective."),
+        types.Part(text="NODE 3 [Depth Map]: Maintain exact volume and perspective."),
         types.Part(inline_data=types.Blob(data=depth,    mime_type="image/jpeg")),
     ]
 
     if ip_adapter_base64 and ip_adapter_mime:
-        parts.append(types.Part.from_text(
+        parts.append(types.Part(text=
             "NODE 4 [Style Reference]: Extract ONLY Material/Color/Lighting. Ignore building structure."
         ))
         parts.append(types.Part(inline_data=types.Blob(
@@ -143,14 +143,14 @@ def generate_render(
         )))
 
     if florence_base64 and florence_mime:
-        parts.append(types.Part.from_text(
+        parts.append(types.Part(text=
             "NODE 5 [Environmental Context]: Extract ONLY Sky/Weather/Landscaping."
         ))
         parts.append(types.Part(inline_data=types.Blob(
             data=base64.b64decode(florence_base64), mime_type=florence_mime
         )))
 
-    parts.append(types.Part.from_text(
+    parts.append(types.Part(text=
         f"USER PROMPT: {positive_prompt}\nNEGATIVE PROMPT: {negative_prompt}"
     ))
 
@@ -183,7 +183,7 @@ def inpaint(
                 types.Part(inline_data=types.Blob(
                     data=base64.b64decode(mask_base64), mime_type="image/png"
                 )),
-                types.Part.from_text(
+                types.Part(text=
                     f"STRICT SELECTIVE EDITING TASK: {edit_prompt or 'Refine the materials of the building facade.'}.\n"
                     "CRITICAL INSTRUCTION:\n"
                     "1. The second image is the EXCLUSIVE REPLACEMENT MASK.\n"
@@ -210,7 +210,7 @@ def upscale(*, image_base64: str, resolution: str) -> tuple[str, str]:
                 types.Part(inline_data=types.Blob(
                     data=base64.b64decode(image_base64), mime_type="image/png"
                 )),
-                types.Part.from_text(
+                types.Part(text=
                     f"Enhance and upscale this architectural rendering to {resolution} resolution. "
                     "Maintain all details, textures, and lighting perfectly while increasing clarity and sharpness."
                 ),
