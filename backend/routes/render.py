@@ -34,6 +34,7 @@ class RenderResponse(BaseModel):
 @router.post("/render", response_model=RenderResponse)
 async def render(req: RenderRequest):
     seed = req.seed_value if req.seed_mode == "fixed" else random.randint(0, 2_147_483_647)
+    temperature = min(req.temperature, 0.4)
     try:
         image_b64, mime = gemini.generate_render(
             control_net_base64=req.control_net_base64,
@@ -47,7 +48,7 @@ async def render(req: RenderRequest):
             positive_prompt=req.positive_prompt,
             negative_prompt=req.negative_prompt,
             seed=seed,
-            temperature=req.temperature,
+            temperature=temperature,
         )
         return RenderResponse(image_base64=image_b64, mime_type=mime, used_seed=seed)
     except ValueError as e:

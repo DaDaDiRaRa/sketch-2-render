@@ -10,8 +10,8 @@ from PIL import Image, ImageFilter
 
 load_dotenv()
 
-IMAGE_MODEL = "gemini-2.0-flash-preview-image-generation"
-TEXT_MODEL  = "gemini-2.5-flash"
+IMAGE_MODEL = "gemini-3-pro-image-preview"
+TEXT_MODEL  = "gemini-3.5-flash"
 
 _ASPECT_RATIOS = [
     ("1:1",  1.0),
